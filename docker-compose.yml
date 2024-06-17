@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  jenkins-master:
+    container_name: jenkins-master
+    build:
+      context: ./docker/jenkins-master
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+      - 50000:50000
+    environment:
+      - DOCKER_HOST=tcp://docker:2376
+    volumes:
+      - jenkins_home:/var/jenkins_home
+    networks:
+      - jenkins
+    restart: on-failure
+
+  proxy:
+    container_name: proxy
+    image: alpine/socat
+    ports:
+      - 127.0.0.1:2376:2375
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      jenkins:
+        ipv4_address: 172.18.0.8
+    restart: always
+    command: tcp-listen:2375,fork,reuseaddr unix-connect:/var/run/docker.sock
+
+  sonarqube:
+    container_name: sonarqube
+    image: sonarqube
+    ports:
+      - 9000:9000
+    networks:
+      - jenkins
+    restart: on-failure
+
+volumes:
+  jenkins_home:
+
+networks:
+  jenkins:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.18.0.0/16
+          gateway: 172.18.0.1
