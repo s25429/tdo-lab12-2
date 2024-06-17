@@ -16,6 +16,7 @@ pipeline {
             steps {
                 sh 'curl -o build-wrapper-linux-x86.zip $BUILD_WRAPPER_URL'
                 sh 'unzip build-wrapper-linux-x86.zip -d build-wrapper'
+                sh 'chown -R $(whoami):$(whoami) build-wrapper'
                 sh 'chmod -R 755 build-wrapper/build-wrapper-linux-x86'
             }
         }
