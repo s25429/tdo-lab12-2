@@ -7,7 +7,8 @@ pipeline {
 
     environment {
         SONARQUBE_SERVER = 'LocalSonarQube'
-        BUILD_WRAPPER_URL = 'http://localhost:9000/static/cpp/build-wrapper-linux-x86.zip'
+        // BUILD_WRAPPER_URL = 'http://localhost:9000/static/cpp/build-wrapper-linux-x86.zip'
+        BUILD_WRAPPER_URL = 'https://sonarcloud.io/static/cpp/build-wrapper-linux-x86.zip'
     }
 
     stages {
