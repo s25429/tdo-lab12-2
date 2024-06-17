@@ -16,14 +16,12 @@ pipeline {
             steps {
                 sh 'curl -o build-wrapper-linux-x86.zip $BUILD_WRAPPER_URL'
                 sh 'unzip build-wrapper-linux-x86.zip -d build-wrapper'
-                sh 'ls'
-                sh 'ls build-wrapper'
-                sh 'chmod +x build-wrapper/build-wrapper-linux-x86-64'
+                sh 'chmod +x build-wrapper/build-wrapper-linux-x86'
             }
         }
         stage('Build') {
             steps {
-                sh './build-wrapper/build-wrapper-linux-x86-64 --out-dir bw-output g++ -o main.out main.cpp'
+                sh './build-wrapper/build-wrapper-linux-x86 --out-dir bw-output g++ -o main.out main.cpp'
             }
         }
         // stage('Run') {
