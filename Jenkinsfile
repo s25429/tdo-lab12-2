@@ -22,6 +22,8 @@ pipeline {
         }
         stage('Build') {
             steps {
+                sh 'chown -R $(whoami):$(whoami) build-wrapper'
+                sh 'chmod -R 755 build-wrapper/build-wrapper-linux-x86'
                 sh './build-wrapper/build-wrapper-linux-x86 --out-dir bw-output g++ -o main.out main.cpp'
             }
         }
