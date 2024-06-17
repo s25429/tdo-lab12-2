@@ -16,6 +16,8 @@ pipeline {
             steps {
                 sh 'curl -o build-wrapper-linux-x86.zip $BUILD_WRAPPER_URL'
                 sh 'unzip build-wrapper-linux-x86.zip -d build-wrapper'
+                sh 'ls'
+                sh 'ls build-wrapper'
                 sh 'chmod +x build-wrapper/build-wrapper-linux-x86-64'
             }
         }
